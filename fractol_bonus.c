@@ -1,64 +1,92 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tricorn_bonus.c                                    :+:      :+:    :+:   */
+/*   fractol_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-mous <nel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 08:55:39 by nel-mous          #+#    #+#             */
-/*   Updated: 2023/02/07 19:08:47 by nel-mous         ###   ########.fr       */
+/*   Created: 2023/02/07 18:16:15 by nel-mous          #+#    #+#             */
+/*   Updated: 2023/02/08 12:08:17 by nel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol_bonus.h"
 
-int	check_tricorn(t_mlx *mlx)
+int	check_if_belongs(t_mlx *mlx)
 {
-	double	z_re;
-	double	z_im;
-	double	z_temp;
+	double		z_re;
+	double		z_im;
+	double		z_temp;
+	t_complex	k;
 
 	z_re = 0;
 	z_im = 0;
 	mlx->iter = 0;
+	if (mlx->mlx_fract == 0)
+	{
+		k.re = mlx->ir;
+		k.im = mlx->ig;
+	}
 	while (mlx->iter < MAX_ITER)
 	{
 		z_temp = z_re;
 		z_re = (z_re * z_re - z_im * z_im) + mlx->c.re;
-		z_im = (-2 * z_temp * z_im) + mlx->c.im;
+		z_im = (2 * z_temp * z_im) + mlx->c.im;
 		if (sqrt(z_re * z_re + z_im * z_im) > 2)
 			break ;
 		mlx->iter++;
+		if (mlx->mlx_fract == 0)
+			mlx->c = k;
 	}
 	return (mlx->iter);
 }
 
-int	colortricorn(t_mlx *data, int x, int y)
+int	color(t_mlx *data, int x, int y)
 {
-	data->iter = check_tricorn(data);
+	data->iter = check_if_belongs(data);
 	if (data->iter)
 		draw_pixel(&data->image, x, y, data->color.color_i * (data->iter));
-	if (data->iter > 20 && data->iter < 90)
+	if (data->iter > 20 && data->iter <= 90)
 		draw_pixel(&data->image, x, y, data->color.color_j * (data->iter));
 	if (data->iter == 100)
 		draw_pixel(&data->image, x, y, data->color.color_j * (data->iter));
 	return (0);
 }
 
-void	tricorn(t_mlx *data)
+void	mandelbrot(t_mlx *data)
 {
 	int	x;
 	int	y;
 
-	data->mlx_fract = 2;
 	x = 0;
+	data->mlx_fract = 1;
 	while (x < W)
 	{
 		y = 0;
 		while (y < H)
 		{
 			data->c = map(x, y, data);
-			colortricorn(data, x, y);
+			color(data, x, y);
+			y++;
+		}
+		x++;
+	}
+}
+
+void	julia(t_mlx *data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	data->mlx_fract = 0;
+	while (x < W)
+	{
+		y = 0;
+		while (y < H)
+		{
+			data->c = map(x, y, data);
+			color(data, x, y);
 			y++;
 		}
 		x++;

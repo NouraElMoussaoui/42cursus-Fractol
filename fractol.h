@@ -6,30 +6,23 @@
 /*   By: nel-mous <nel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 13:05:09 by nel-mous          #+#    #+#             */
-/*   Updated: 2023/02/04 11:49:44 by nel-mous         ###   ########.fr       */
+/*   Updated: 2023/02/09 08:53:42 by nel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include <stdio.h>
 # include<mlx.h>
 # include<math.h>
-# include <stdlib.h>
 # include "Libft/libft.h"
 
-# define MAX_ITER 150
+# define MAX_ITER 120
 # define W 1200
 # define H 1200
 # define KEY_ESC 53 
 # define SCROLL_UP 4
 # define SCROLL_DOWN 5
-# define KEY_UP 126
-# define KEY_DOWN 125
-# define KEY_RIGHT 124
-# define KEY_LEFT 123
-# define KEY_SHIFT 258
 
 typedef struct s_plan
 {
@@ -74,24 +67,19 @@ typedef struct s_mlx
 	t_color		color;
 }				t_mlx;
 
-double		to_float(char *str);
+int			check_if_belongs(t_mlx *mlx);
+int			color(t_mlx *data, int x, int y);
 void		mandelbrot(t_mlx *data);
 void		julia(t_mlx *data);
-void		draw_pixel(t_image *data, int x, int y, int color);
-t_complex	map(int x_pix, int y_pix, t_mlx *mlx);
-int			check_if_belongs(t_mlx *mlx);
-void		keys_handling(int key, t_mlx *mlx);
-int			keys_check(int key, t_mlx *mlx);
 void		zoom(int key, t_mlx *mlx);
 int			mouse_check(int key, int x, int y, t_mlx *mlx);
-int			close_win(t_mlx *mlx);
-int			color(t_mlx *data, int x, int y);
-int			check_tricorn(t_mlx *mlx);
-void		tricorn(t_mlx *data);
-int			colortricorn(t_mlx *data, int x, int y);
-int			check_mouse(int key, int x, int y, t_mlx *mlx);
-void		handle_keys(int key, t_mlx *mlx);
-void		zoomtricorn(int key, t_mlx *mlx);
-int			check_keys(int key, t_mlx *mlx);
+int			keys_check(int key);
+int			close_window(t_mlx *mlx);
+void		hooks(t_mlx mlx);
+void		draw_pixel(t_image *data, int x, int y, int color);
+void		clear_window(t_mlx *mlx);
+void		oops(void);
+double		to_float(char *str);
+t_complex	map(int x_px, int y_px, t_mlx *mlx);
 
 #endif

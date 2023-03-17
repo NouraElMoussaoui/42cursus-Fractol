@@ -6,13 +6,13 @@
 /*   By: nel-mous <nel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 11:30:56 by nel-mous          #+#    #+#             */
-/*   Updated: 2023/02/05 10:43:48 by nel-mous         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:23:37 by nel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol_bonus.h"
 
-void	zoombonus(int key, t_mlx *mlx)
+void	zoom(int key, t_mlx *mlx)
 {
 	double	scale;
 
@@ -33,24 +33,7 @@ void	zoombonus(int key, t_mlx *mlx)
 	}
 }
 
-int	check_mouse(int key, int x, int y, t_mlx *mlx)
-{
-	(void)x;
-	(void)y;
-	if (key == SCROLL_DOWN || key == SCROLL_UP)
-	{
-		mlx_clear_window(mlx->ptr, mlx->win);
-		zoombonus(key, mlx);
-		if (mlx->mlx_fract == 2)
-			tricorn(mlx);
-		else if (mlx->mlx_fract == 3)
-			multibrot(mlx);
-		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->image.img, 0, 0);
-	}
-	return (0);
-}
-
-void	handle_keys(int key, t_mlx *mlx)
+void	keys_handling(int key, t_mlx *mlx)
 {	
 	double	shift;
 
@@ -77,30 +60,46 @@ void	handle_keys(int key, t_mlx *mlx)
 	}
 }
 
-int	check_keys(int key, t_mlx *mlx)
+void	move(int key, t_mlx *mlx)
 {
-	if (key == KEY_RIGHT || key == KEY_UP || key == KEY_LEFT || key == KEY_DOWN)
+	clear_window(mlx);
+	keys_handling(key, mlx);
+	if (mlx->mlx_fract == 1)
+		mandelbrot(mlx);
+	else if (mlx->mlx_fract == 0)
+		julia(mlx);
+	else if (mlx->mlx_fract == 2)
+		tricorn(mlx);
+	else if (mlx->mlx_fract == 3)
+		multibrot(mlx);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->image.img, 0, 0);
+}
+
+void	animation(int key, t_mlx *mlx)
+{
+	if (key == KEY_PLUS)
 	{
-		mlx_clear_window(mlx->ptr, mlx->win);
-		handle_keys(key, mlx);
-		if (mlx->mlx_fract == 2)
-			tricorn(mlx);
-		else if (mlx->mlx_fract == 3)
-			multibrot(mlx);
-		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->image.img, 0, 0);
+		mlx->ir += 0.01;
+		mlx->ig += 0.01;
 	}
-	else if (key == KEY_ESC)
-		exit(0);
-	else if (key == KEY_SHIFT)
+	else if (key == KEY_MINUS)
 	{
-		mlx_clear_window(mlx->ptr, mlx->win);
-		mlx->color.color_i += 5;
-		mlx->color.color_j += 100;
-		if (mlx->mlx_fract == 2)
-			tricorn(mlx);
-		else if (mlx->mlx_fract == 3)
-			multibrot(mlx);
-		mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->image.img, 0, 0);
+		mlx->ir -= 0.01;
+		mlx->ig -= 0.01;
 	}
-	return (0);
+}
+
+void	julia_animation(int key, t_mlx *mlx)
+{
+	clear_window(mlx);
+	animation(key, mlx);
+	if (mlx->mlx_fract == 1)
+		mandelbrot(mlx);
+	else if (mlx->mlx_fract == 0)
+		julia(mlx);
+	else if (mlx->mlx_fract == 2)
+		tricorn(mlx);
+	else if (mlx->mlx_fract == 3)
+		multibrot(mlx);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->image.img, 0, 0);
 }
