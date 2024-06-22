@@ -13,9 +13,9 @@ Various natural phenomena – like the romanesco cabbage – have some fractal f
 # Getting Started
 ## How to Run
 
-- To compile the program, use the provided Makefile:
+### To compile the program, use the provided Makefile:
  * make
-- To run the program, use the following command:
+### To run the program, use the following command:
  * Mandatory Part: ./fractol [type] [parameters]
  * Bonus Part: ./fractol_bonus [type] [parameters]
 Where:
