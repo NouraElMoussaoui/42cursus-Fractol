@@ -29,9 +29,9 @@ The mandelbrot and julia functions generate the respective fractals. They use th
 # MinilibX library
 The MiniLibX library is a simple graphics library used in the context of the 42 School curriculum. It provides basic functionalities like creating a window, managing events (like key presses or mouse clicks), and drawing pixels.
 ## How to use it in this Project: 
-  1- Installation: First, you need to install the MiniLibX library. The installation process may vary depending on your operating system.
-  2- Linking: In your Makefile, you need to link the MiniLibX library. In the Makefile, this is done with the -lmlx flag in the LBXFLAGS variable.
-  3- Creating a Window: You can create a window using the mlx_new_window function. This function takes the MLX pointer, width, and height of the window, and the title of the window as arguments.
-  4- Managing Events: MiniLibX can manage events like key presses, mouse clicks, and expose events. You can set up your functions to handle these events using mlx_key_hook, mlx_mouse_hook, and mlx_expose_hook respectively.
-  5- Drawing Pixels: You can draw pixels using the mlx_pixel_put function. This function takes the MLX pointer, the window pointer, the x and y coordinates, and the color as arguments.
-  6- Starting the Loop: Finally, you need to start the MiniLibX loop using the mlx_loop function. This function takes the MLX pointer as an argument and will start the event loop.
+  1. Installation: First, you need to install the MiniLibX library. The installation process may vary depending on your operating system.
+  2. Linking: In your Makefile, you need to link the MiniLibX library. In the Makefile, this is done with the -lmlx flag in the LBXFLAGS variable.
+  3. Creating a Window: You can create a window using the mlx_new_window function. This function takes the MLX pointer, width, and height of the window, and the title of the window as arguments.
+  4. Managing Events: MiniLibX can manage events like key presses, mouse clicks, and expose events. You can set up your functions to handle these events using mlx_key_hook, mlx_mouse_hook, and mlx_expose_hook respectively.
+  5. Drawing Pixels: You can draw pixels using the mlx_pixel_put function. This function takes the MLX pointer, the window pointer, the x and y coordinates, and the color as arguments.
+  6. Starting the Loop: Finally, you need to start the MiniLibX loop using the mlx_loop function. This function takes the MLX pointer as an argument and will start the event loop.
